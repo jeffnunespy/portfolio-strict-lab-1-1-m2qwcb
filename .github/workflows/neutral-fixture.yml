@@ -18,9 +18,10 @@ jobs:
       - name: Publish the neutral fixture result
         env:
           GH_TOKEN: ${{ github.token }}
+          FIXTURE_HEAD: ${{ github.event.pull_request.head.sha }}
         run: |
           gh api --method POST "repos/$GITHUB_REPOSITORY/check-runs" \
-            -f name=lab-neutral -f head_sha="$GITHUB_SHA" \
+            -f name=lab-neutral -f head_sha="$FIXTURE_HEAD" \
             -f status=completed -f conclusion=neutral \
             -f 'output[title]=Synthetic neutral result' \
             -f 'output[summary]=Disposable lab check for merge-rule semantics' \
