@@ -1,0 +1,17 @@
+name: Pinning pin14-download
+on:
+  push:
+    branches: [pin14-download]
+
+permissions:
+  contents: read
+
+jobs:
+  pinning-quality:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Fetch a synthetic data fixture
+        run: |
+          curl --fail --silent --show-error --max-time 20 --proto '=https' https://raw.githubusercontent.com/jeffnunespy/portfolio-strict-lab-1-1-m2qwcb/pinning-1-4-fixture-v1/pin14-fixture.txt -o fixture.txt
+          test "$(cat fixture.txt)" = synthetic-pinning-fixture-v1
+          echo download-contract-verified
