@@ -1,7 +1,7 @@
-name: Pinning pin14-composite-pin
+name: Pinning pin14-composite-remote
 on:
   push:
-    branches: [pin14-composite-pin]
+    branches: [pin14-composite-remote]
 
 permissions:
   contents: read
@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - uses: ./.github/actions/pin14
+      - uses: jeffnunespy/portfolio-strict-lab-1-1-m2qwcb/.github/actions/pin14@d8669fd7dda40a57947d2c9eec547e5cd3fdfb06
