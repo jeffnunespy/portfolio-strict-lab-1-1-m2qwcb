@@ -1,7 +1,7 @@
-name: Pinning pin14-tag
+name: Pinning pin14-short
 on:
   push:
-    branches: [pin14-tag]
+    branches: [pin14-short]
 
 permissions:
   contents: read
@@ -10,7 +10,7 @@ jobs:
   pinning-quality:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e
         with:
           persist-credentials: false
       - run: echo tag-control-ran
