@@ -1,0 +1,10 @@
+name: Pinning composite fixture
+description: Synthetic composite with one setup step
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+      with:
+        node-version: "24.22.3"
+    - shell: bash
+      run: echo composite-contract-ran
