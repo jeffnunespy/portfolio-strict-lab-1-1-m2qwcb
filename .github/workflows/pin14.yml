@@ -1,0 +1,11 @@
+name: Pinning pin14-reusable-tag
+on:
+  push:
+    branches: [pin14-reusable-tag]
+
+permissions:
+  contents: read
+
+jobs:
+  pinning-quality:
+    uses: jeffnunespy/portfolio-strict-lab-1-1-m2qwcb/.github/workflows/pin14-reusable.yml@pinning-1-4-fixture-v1
