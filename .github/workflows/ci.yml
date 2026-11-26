@@ -33,5 +33,5 @@ jobs:
       - name: Janela de cancelamento do laboratório
         if: github.head_ref == 'm3-cancel'
         run: sleep 100
-      - name: Verificar o contrato sintético
+      - name: Verificar o contrato sintético (marcador do candidato)
         run: python3 verify.py
