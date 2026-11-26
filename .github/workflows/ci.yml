@@ -1,0 +1,37 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || format('run-{0}', github.run_id) }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    if: github.head_ref != 'm3-skip-job'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Identificar árvore testada
+        env:
+          HEAD_PR: ${{ github.event.pull_request.head.sha }}
+          BASE_PR: ${{ github.event.pull_request.base.sha }}
+        run: |
+          checkout="$(git rev-parse HEAD)"
+          test "$checkout" = "$GITHUB_SHA"
+          printf 'LAB-CI event=%s ref=%s sha=%s pr_head=%s pr_base=%s tree=%s\n' \
+            "$GITHUB_EVENT_NAME" "$GITHUB_REF" "$checkout" "${HEAD_PR:--}" "${BASE_PR:--}" "$(git rev-parse HEAD^{tree})" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Janela de cancelamento do laboratório
+        if: github.head_ref == 'm3-cancel'
+        run: sleep 100
+      - name: Verificar o contrato sintético
+        run: python3 verify.py
